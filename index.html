@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prajyot Gorlewar</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <!-- Add Poppins font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: #f3f4f6;
+      color: #111827;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+    }
+
+    .navbar {
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.5rem;
+      height: 6rem;
+      transition: all 0.3s;
+      /* Remove the default shadow */
+      box-shadow: none;
+    }
+
+    .navbar.scrolled {
+      height: 4rem;
+      /* Add shadow only when scrolled */
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .navbar h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #000a0c;
+    }
+
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: #111827;
+      text-decoration: none;
+      position: relative;
+      font-weight: 500;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      border-radius: 10rem;
+      background-color: #ff0000;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a:focus::after,
+    .nav-links a.active::after {
+      /* Add active state here */
+      width: 100%;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      padding-top: 7rem;
+      padding-bottom: 5rem;
+      background-color: #ffffff;
+      color: rgb(0, 0, 0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 7rem 1.5rem 5rem;
+    }
+
+    .hero .red-line {
+      width: 60px;
+      height: 4px;
+      border-radius: 10rem;
+      background-color: #ff0000;
+      margin-bottom: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    .profile-img {
+      margin-top: 3rem;
+      width: 15%;
+      height: 15%;
+      border-radius: 9999px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (min-width: 768px) {
+      .profile-img {
+        margin-right: 2rem;
+      }
+    }
+
+    #about {
+      padding: 4rem 1.5rem;
+      background-color: rgb(241, 241, 241);
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-image {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .about-image img {
+      width: 75%;
+      height: auto;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-content {
+      flex: 1;
+    }
+
+    .about-content h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #111827;
+    }
+
+    .about-content .red-line {
+      width: 60px;
+      height: 4px;
+      border-radius: 10rem;
+      background-color: #ff0000;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-content p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #4b5563;
+      font-weight: 400;
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .about-image,
+      .about-content {
+        width: 100%;
+      }
+    }
+
+    .hero-content {
+      text-align: center;
+    }
+
+    .hero-content h2 {
+      font-weight: 700;
+      font-size: 2.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-content p {
+      font-weight: 300;
+      font-size: 1.125rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-content {
+        text-align: left;
+      }
+    }
+
+    .section {
+      padding: 3rem 0.1rem;
+      text-align: center;
+    }
+
+    .section.gray {
+      background-color: #e5e7eb;
+    }
+
+    .section-title {
+      font-size: 1.875rem;
+      font-weight: 700;
+
+    }
+
+    #projects .container {
+      max-width: fit-content;
+      margin: 0 auto;
+    }
+
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 1rem 3rem;
+      margin-top: 1rem;
+      margin-bottom: 0rem;
+      padding: 0 0.5rem;
+    }
+
+
+    .hidden-projects {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    }
+
+
+    .hidden-projects.show {
+      max-height: fit-content;
+      opacity: 1;
+    }
+
+    .toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      /* Space between text and icon */
+      justify-content: center;
+      margin: 20px auto;
+
+      background-color: transparent;
+      color: rgb(42, 42, 42);
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 5px;
+      transition: background 0.3s ease, color 0.3s ease;
+      font-weight: 400;
+    }
+
+    /* Smooth rotation for dropdown icon */
+    .dropdown-icon {
+      display: inline-block;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Rotate the icon when expanded */
+    .toggle-btn.active .dropdown-icon {
+      transform: rotate(180deg);
+    }
+
+
+
+    .toggle-btn:hover {
+      color: rgb(0, 0, 0);
+      text-shadow: 0px 0px 0.75px rgba(0, 0, 0, 0.6);
+      /* font-weight: 500; */
+    }
+
+
+
+    @media (min-width: 768px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .project-card {
+      background-color: white;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-image {
+      width: 100%;
+      /* Full width of the container */
+      aspect-ratio: 1 / 1;
+      /* Ensures a perfect square */
+      overflow: hidden;
+      position: relative;
+    }
+
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-image img {
+      transform: scale(1.05);
+    }
+
+    .project-content {
+      padding: 1rem;
+    }
+
+    .project-content h3 {
+      font-weight: 600;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: #111827;
+    }
+
+    .project-content p {
+      color: #4b5563;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .project-tag {
+      background-color: #f3f4f6;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      color: #374151;
+
+      font-weight: 500;
+    }
+
+    .game-download-btn {
+      background-color: #374151;
+      /* Blue button background */
+      color: rgb(255, 255, 255);
+      /* White text color */
+      padding: 10px 10px;
+      margin: 1rem;
+      /* Increased padding for more height */
+      border-radius: 5px;
+      text-decoration: none;
+      /* Remove underline from link */
+      font-size: 1rem;
+      line-height: 1.5;
+      /* Adjust line-height for vertical spacing */
+      display: inline-block;
+      /* Ensures button behaves like a block element */
+      transition: background-color 0.3s;
+    }
+
+    .game-download-btn:hover {
+      background-color: #ff0000;
+      color: rgb(255, 255, 255);
+      font-size: 1rem;
+      /* Darker blue on hover */
+    }
+
+    #techstack {
+      padding: 40px 0;
+      background-color: #ffffff;
+    }
+
+    .container {
+      width: 80%;
+      /* Adjust the width of the container */
+      max-width: 1200px;
+      /* Optional: Limit the maximum width */
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .tech-stack-images {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      /* Allows images to wrap to the next line */
+      justify-content: space-between;
+      /* Distributes images evenly */
+      gap: 30px;
+      /* Space between images */
+      margin-top: 20px;
+    }
+
+    .tech-stack-images img {
+      height: 80px;
+      /* Fixed height */
+      object-fit: contain;
+      transition: transform 0.3s ease-in-out;
+      width: calc(25% - 30px);
+      /* 4 images per row, adjust for spacing */
+    }
+
+    .tech-stack-images img:hover {
+      transform: scale(1.1);
+    }
+
+    #experience {
+      padding: 40px 0;
+      background-color: #f4f4f9;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .experience-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 30px;
+      background-color: #fff;
+      /* Optional: Adds background to each experience item */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .role-info {
+      flex: 1;
+      text-align: left;
+    }
+
+    .role-info h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .role-info p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .logo {
+      margin-right: 20px;
+    }
+
+    .logo img {
+      max-width: 100px;
+      /* Adjust the size of the logo */
+      height: auto;
+    }
+
+    .internship-duration {
+      font-weight: bold;
+      font-size: 1rem;
+      /* Slightly larger text */
+      color: #333;
+      /* Darker color for better visibility */
+      margin-top: 10px;
+      /* Optional: Adds space from other content */
+    }
+
+
+
+
+    #contact {
+      background-color: black;
+      color: white;
+
+      /* Ensure text is visible on black background */
+      padding: 40px 0;
+      /* Optional: Adjust padding for better spacing */
+    }
+
+    .social-links a {
+      color: white;
+      /* Make social icons white for visibility */
+      margin: 0 10px;
+      font-size: 2rem;
+    }
+
+    .download-btn {
+      background-color: #ffffff;
+      /* Blue button background */
+      color: rgb(0, 0, 0);
+      /* White text color */
+      padding: 15px 20px;
+      margin: 2rem;
+      /* Increased padding for more height */
+      border-radius: 5px;
+      text-decoration: none;
+      /* Remove underline from link */
+      font-size: 1rem;
+      line-height: 1.5;
+      /* Adjust line-height for vertical spacing */
+      display: inline-block;
+      /* Ensures button behaves like a block element */
+      transition: background-color 0.3s;
+    }
+
+    .download-btn:hover {
+      background-color: #ff0000;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      /* Darker blue on hover */
+    }
+
+
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: white;
+      box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+      font-weight: 300;
+    }
+
+    .container {
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+
+    p {
+      font-weight: 300;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <h1>Portfolio</h1>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About Me</a>
+      <a href="#projects">Projects</a>
+      <a href="#techstack">Tech Stack</a>
+      <a href="#experience">Experience</a>
+    </div>
+  </nav>
+
+  <header id="home" class="hero">
+    <img src="profileImage.jpg" alt="Profile" class="profile-img">
+    <div class="hero-content">
+      <h2>Hi, I'm Prajyot Gorlewar</h2>
+      <div class="red-line"></div>
+      <p>Game Developer | UI/UX ​Designer</p>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="about-container">
+      <div class="about-image">
+        <img src="aboutImage.jpg" alt="Game Developer" />
+      </div>
+      <div class="about-content">
+        <h2>About Me</h2>
+        <div class="red-line"></div>
+        <p>I am a Game Developer & UI/UX Designer pursuing a B.Tech in Computer Science and Engineering (Data Science).
+          With 2+ years of experience in Unity, I specialize in game development, 3D modeling (Blender), and UI/UX
+          design (Figma). My creative mindset and coding expertise help me craft immersive experiences and intuitive
+          interfaces.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section gray">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <p>Some Notable Projects</p>
+      <div class="projects-grid">
+        <!-- First 3 Projects (Always Visible) -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="warWheels.png" alt="Project 1" />
+          </div>
+          <div class="project-content">
+            <h3>War Wheels: Death Roll</h3>
+            <p>An robot combat game where you battle robotic enemies, conquer deadly terrains, and defeat powerful
+              bosses!</p>
+            <div class="project-tags">
+              <span class="project-tag">Unity 3D</span>
+              <span class="project-tag">C#</span>
+              <span class="project-tag">Blender</span>
+            </div>
+            <div>
+              <a href="https://play.google.com/store/apps/details?id=com.XorvelStudios.WarWheels&hl=en"
+                class="game-download-btn">Download</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">
+            <img src="campusNav.png" alt="Project 2" />
+          </div>
+          <div class="project-content">
+            <h3>CampusNav (Development)</h3>
+            <p>A collaborative project redefining campus navigation with a 3D avatar, virtual campus model, and teacher
+              locator.</p>
+            <div class="project-tags">
+              <span class="project-tag">Unity 3D</span>
+              <span class="project-tag">C#</span>
+              <span class="project-tag">Blender</span>
+              <span class="project-tag">Firebase</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">
+            <img src="soma.png" alt="Project 3" />
+          </div>
+          <div class="project-content">
+            <h3>SOMA (Prototype)</h3>
+            <p>A collaborative meditation app prototype in Figma with audio sessions, a progress tracker, and an event
+              locator.</p>
+            <div class="project-tags">
+              <span class="project-tag">Figma</span>
+              <span class="project-tag">Prototyping</span>
+              <span class="project-tag">Wireframing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hidden Projects -->
+      <div class="projects-grid hidden-projects">
+        <div class="project-card">
+          <div class="project-image">
+            <img src="ipq.png" alt="I.P.Q" />
+          </div>
+          <div class="project-content">
+            <h3>Project 4</h3>
+            <p>I.P.Q is a collaborative game designed to spread IP knowledge through an intuitive, gamified experience.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Tag 1</span>
+              <span class="project-tag">Tag 2</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">
+            <img src="project5.png" alt="Project 5" />
+          </div>
+          <div class="project-content">
+            <h3>Project 5</h3>
+            <p>Description for project 5...</p>
+            <div class="project-tags">
+              <span class="project-tag">Tag 1</span>
+              <span class="project-tag">Tag 2</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image">
+            <img src="project6.png" alt="Project 6" />
+          </div>
+          <div class="project-content">
+            <h3>Project 6</h3>
+            <p>Description for project 6...</p>
+            <div class="project-tags">
+              <span class="project-tag">Tag 1</span>
+              <span class="project-tag">Tag 2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toggle Button -->
+      <button id="toggleProjectsBtn" class="toggle-btn">
+        <span class="btn-text">See All Projects</span>
+        <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+
+
+
+    </div>
+    </div>
+  </section>
+
+  <section id="techstack" class="section">
+    <div class="container">
+      <h2 class="section-title">Tech Stack</h2>
+      <p>List of technologies and tools I use in my projects.</p>
+      <div class="tech-stack-images">
+        <img src="unity.png" alt="Unity">
+        <img src="blender.png" alt="Blender">
+        <img src="androidstudio.png" alt="Android Studio">
+        <img src="figma.png" alt="Figma">
+        <img src="csharp.png" alt="C#">
+        <img src="c++.png" alt="C++">
+        <img src="java.png" alt="Java">
+        <img src="python.png" alt="Python">
+        <img src="github.png" alt="Github">
+      </div>
+    </div>
+  </section>
+
+
+  <section id="experience" class="section gray">
+    <div class="container">
+      <h2 class="section-title">Experience</h2>
+      <p>Details about my work experience and roles.</p>
+
+      <div class="experience-item">
+        <div class="logo">
+          <img src="adm.png" alt="Organization Logo" />
+        </div>
+        <div class="role-info">
+          <h3>UI/UX Intern</h3>
+          <p class="internship-duration">Remote Internship | Duration: 1 Month</p>
+          <p>As a UI/UX Intern at ADMEducation and Welfare Society, I collaborated with fellow interns to complete
+            various design tasks.
+            I created user-centered designs, wireframes, and prototypes while working remotely. This internship helped
+            me gain hands-on experience
+            in design tools like Figma and enhanced my understanding of the design process through teamwork and
+            feedback.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">Contact Me</h2>
+      <div class="social-links">
+        <a href="https://github.com/prajyotgorlewar"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/prajyot-gorlewar-14a115286/"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:prajyotgorlewar@gmail.com"><i class="fas fa-envelope"></i></a>
+      </div>
+      <div>
+        <a href="resume.pdf" class="download-btn" id="downloadLink">Download Resume</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop; // Get the position of the target element
+          window.scrollTo({
+            top: offsetTop - 50, // Adjust the scroll position with an offset (50px here)
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+
+        // Scroll to the section smoothly
+        target.scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    src = "https://cdn.jsdelivr.net/npm/lucide@latest" >
+      document.getElementById("toggleProjectsBtn").addEventListener("click", function () {
+        const projects = document.querySelector(".hidden-projects");
+
+        // Toggle visibility of hidden projects
+        projects.classList.toggle("show");
+
+        // Change text while keeping the icon intact
+        const btnText = this.querySelector(".btn-text");
+        if (projects.classList.contains("show")) {
+          btnText.textContent = "See Fewer Projects";
+        } else {
+          btnText.textContent = "See All Projects";
+        }
+
+        // Rotate dropdown icon
+        this.classList.toggle("active");
+      });
+
+
+
+    function setActiveTab() {
+      const sections = document.querySelectorAll('section');
+      let index = sections.length;
+      const offset = 100; // Adjust this value to change the scroll trigger
+
+      // Check if we're at the top of the page (Home section)
+      if (window.scrollY === 0) {
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#home') { // Assuming 'home' is the id of the Home section
+            link.classList.add('active');
+          }
+        });
+        return; // Skip the rest of the scroll logic if we're at the top
+      }
+
+      // Loop through sections to see which one is in the viewport with the offset
+      while (--index && window.scrollY + offset < sections[index].offsetTop) { }
+
+      const id = sections[index].id;
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${id}`) {
+          link.classList.add('active'); // Add active class to the link of the currently visible section
+        }
+      });
+    }
+
+    // Listen for the scroll event and update the active tab
+    window.addEventListener('scroll', setActiveTab);
+
+    // Call the function on initial load to set the active tab correctly
+    setActiveTab();
+  </script>
+</body>
+
+</html>
