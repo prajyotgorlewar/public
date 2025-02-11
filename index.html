@@ -66,6 +66,13 @@
       font-weight: 500;
     }
 
+    .nav-links a {
+      position: relative;
+      text-decoration: none;
+      color: black;
+      /* Change as needed */
+    }
+
     .nav-links a::after {
       content: '';
       position: absolute;
@@ -75,19 +82,16 @@
       height: 3px;
       border-radius: 10rem;
       background-color: #ff0000;
-      transition: all 0.3s;
+      transition: all 0.3s ease-in-out;
     }
 
+    /* Underline appears on hover and remains after clicking */
     .nav-links a:hover::after,
-    .nav-links a:focus::after,
     .nav-links a.active::after {
-      /* Add active state here */
       width: 100%;
     }
 
-    .nav-links a:hover::after {
-      width: 100%;
-    }
+
 
     .hero {
       padding-top: 7rem;
@@ -103,10 +107,13 @@
     .hero .red-line {
       width: 60px;
       height: 4px;
+
       border-radius: 10rem;
       background-color: #ff0000;
       margin-bottom: 1rem;
     }
+
+
 
     @media (min-width: 768px) {
       .hero {
@@ -115,11 +122,20 @@
       }
     }
 
+    @media (max-width: 768px) {
+      .hero .red-line {
+        margin: 1rem auto;
+        /* Centers it horizontally */
+        display: block;
+      }
+    }
+
     .profile-img {
       margin-top: 3rem;
-      width: 15%;
-      height: 15%;
-      border-radius: 9999px;
+      margin-bottom: 1rem;
+      width: 10rem;
+      height: 10rem;
+      border-radius: 20rem;
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
     }
 
@@ -127,6 +143,8 @@
       .profile-img {
         margin-right: 2rem;
       }
+
+
     }
 
     #about {
@@ -211,6 +229,8 @@
       .hero-content {
         text-align: left;
       }
+
+
     }
 
     .section {
@@ -253,7 +273,7 @@
 
 
     .hidden-projects.show {
-      max-height: 1000px;
+      max-height: 2000px;
       /* Adjust this value as needed */
       opacity: 1;
     }
@@ -332,7 +352,6 @@
       overflow: hidden;
       position: relative;
     }
-
 
     .project-image img {
       width: 100%;
@@ -428,23 +447,31 @@
     .tech-stack-images {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      /* Allows images to wrap to the next line */
-      justify-content: space-between;
-      /* Distributes images evenly */
-      gap: 30px;
-      /* Space between images */
-      margin-top: 20px;
+      gap: 2rem 2rem;
+      /* Increased gap between images */
+      justify-content: center;
     }
 
     .tech-stack-images img {
       height: 80px;
-      /* Fixed height */
+      /* Fixed height for uniformity */
+      width: auto;
+      /* Maintain aspect ratio */
+      max-width: calc(25% - 20px);
+      /* Ensures 4 per row with spacing */
       object-fit: contain;
       transition: transform 0.3s ease-in-out;
-      width: calc(25% - 30px);
-      /* 4 images per row, adjust for spacing */
     }
+
+    @media (max-width: 500px) {
+      .tech-stack-images img {
+        max-width: calc(33.33% - 20px);
+        /* Ensures 3 per row with spacing */
+      }
+    }
+
+
+
 
     .tech-stack-images img:hover {
       transform: scale(1.1);
@@ -454,6 +481,26 @@
       padding: 40px 0;
       background-color: #f4f4f9;
     }
+
+    @media (max-width: 768px) {
+      .experience-item {
+        flex-direction: column;
+        text-align: center;
+        /* Centers content */
+      }
+
+      .logo {
+        margin-right: 0;
+        margin-bottom: 15px;
+        /* Adds spacing below the logo */
+      }
+
+      .role-info {
+        text-align: center;
+        /* Centers text */
+      }
+    }
+
 
     .container {
       width: 80%;
@@ -516,9 +563,6 @@
       /* Optional: Adds space from other content */
     }
 
-
-
-
     #contact {
       background-color: black;
       color: white;
@@ -579,6 +623,69 @@
     p {
       font-weight: 300;
     }
+
+    /* Hide nav links and show menu button on smaller screens */
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block !important;
+      }
+
+
+    }
+
+    /* Default state for menu button */
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #111827;
+      /* Ensure the menu button is visible */
+    }
+
+    /* Side window styles */
+    .side-window {
+      position: fixed;
+      top: 0;
+      right: -150px;
+      width: 150px;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.701);
+      /* More transparent background */
+      backdrop-filter: blur(8px);
+      /* Adds blur effect */
+      -webkit-backdrop-filter: blur(8px);
+      /* For Safari support */
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transition: right 0.3s ease;
+      z-index: 100;
+      padding: 1rem;
+    }
+
+    .side-window.open {
+      right: 0;
+      padding: 0.9 1.5rem;
+    }
+
+    .side-window .close-btn {
+      display: block;
+      text-align: right;
+      margin-right: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .side-window .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 
@@ -592,7 +699,23 @@
       <a href="#techstack">Tech Stack</a>
       <a href="#experience">Experience</a>
     </div>
+    <button class="menu-btn" onclick="toggleSideWindow()">
+      <i class="fas fa-bars"></i>
+    </button>
   </nav>
+
+  <div class="side-window" id="sideWindow">
+    <span class="close-btn" onclick="toggleSideWindow()">
+      <i class="fas fa-times"></i>
+    </span>
+    <div class="nav-links">
+      <a href="#home" onclick="toggleSideWindow()">Home</a>
+      <a href="#about" onclick="toggleSideWindow()">About Me</a>
+      <a href="#projects" onclick="toggleSideWindow()">Projects</a>
+      <a href="#techstack" onclick="toggleSideWindow()">Tech Stack</a>
+      <a href="#experience" onclick="toggleSideWindow()">Experience</a>
+    </div>
+  </div>
 
   <header id="home" class="hero">
     <img src="profileImage.jpg" alt="Profile" class="profile-img">
@@ -686,40 +809,42 @@
             <img src="ipq.png" alt="I.P.Q" />
           </div>
           <div class="project-content">
-            <h3>Project 4</h3>
+            <h3>I.P.Q</h3>
             <p>I.P.Q is a collaborative game designed to spread IP knowledge through an intuitive, gamified experience.
             </p>
             <div class="project-tags">
-              <span class="project-tag">Tag 1</span>
-              <span class="project-tag">Tag 2</span>
+              <span class="project-tag">Unity 2D</span>
+              <span class="project-tag">C#</span>
             </div>
           </div>
         </div>
 
         <div class="project-card">
           <div class="project-image">
-            <img src="project5.png" alt="Project 5" />
+            <img src="onehit.png" alt="Project 5" />
           </div>
           <div class="project-content">
-            <h3>Project 5</h3>
-            <p>Description for project 5...</p>
+            <h3>OneHit Timesters</h3>
+            <p>A 3D Unity game where a robotic cannon survives enemy shots, controlling time by moving and aiming.</p>
             <div class="project-tags">
-              <span class="project-tag">Tag 1</span>
-              <span class="project-tag">Tag 2</span>
+              <span class="project-tag">Unity 3D</span>
+              <span class="project-tag">C#</span>
+              <span class="project-tag">Blender</span>
             </div>
           </div>
         </div>
 
         <div class="project-card">
           <div class="project-image">
-            <img src="project6.png" alt="Project 6" />
+            <img src="dawn.png" alt="Project 6" />
           </div>
           <div class="project-content">
-            <h3>Project 6</h3>
-            <p>Description for project 6...</p>
+            <h3>Dawn</h3>
+            <p>A 2D Unity platformer by a team of five, spreading climate change awareness through engaging gameplay.</p>
             <div class="project-tags">
-              <span class="project-tag">Tag 1</span>
-              <span class="project-tag">Tag 2</span>
+              <span class="project-tag">Unity 2D</span>
+              <span class="project-tag">C#</span>
+              <span class="project-tag">Figma</span>
             </div>
           </div>
         </div>
@@ -733,9 +858,6 @@
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
       </button>
-
-
-
     </div>
     </div>
   </section>
@@ -749,11 +871,12 @@
         <img src="blender.png" alt="Blender">
         <img src="androidstudio.png" alt="Android Studio">
         <img src="figma.png" alt="Figma">
+        <img src="github.png" alt="Github">
         <img src="csharp.png" alt="C#">
         <img src="c++.png" alt="C++">
         <img src="java.png" alt="Java">
         <img src="python.png" alt="Python">
-        <img src="github.png" alt="Github">
+
       </div>
     </div>
   </section>
@@ -771,7 +894,7 @@
         <div class="role-info">
           <h3>UI/UX Intern</h3>
           <p class="internship-duration">Remote Internship | Duration: 1 Month</p>
-          <p>As a UI/UX Intern at ADMEducation and Welfare Society, I collaborated with fellow interns to complete
+          <p>As a UI/UX Intern at ADM Education and Welfare Society, I collaborated with fellow interns to complete
             various design tasks.
             I created user-centered designs, wireframes, and prototypes while working remotely. This internship helped
             me gain hands-on experience
@@ -800,96 +923,109 @@
 
   <script>
     // Navbar scroll effect
-    window.addEventListener('scroll', () => {
-      const navbar = document.querySelector('.navbar');
-      if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
+    window.addEventListener("scroll", () => {
+      const navbar = document.querySelector(".navbar");
+      navbar.classList.toggle("scrolled", window.scrollY > 50);
     });
 
     // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.querySelector(this.getAttribute("href"));
+
         if (target) {
-          const offsetTop = target.offsetTop; // Get the position of the target element
+          const navbarHeight = document.querySelector(".navbar")?.offsetHeight || 50;
+          const offsetTop = target.getBoundingClientRect().top + window.scrollY;
+
           window.scrollTo({
-            top: offsetTop - 50, // Adjust the scroll position with an offset (50px here)
-            behavior: 'smooth'
+            top: offsetTop - navbarHeight,
+            behavior: "smooth",
           });
+
+          // Wait for the scroll to finish before updating active nav link
+          setTimeout(updateActiveNavLink, 500);
         }
       });
     });
 
-    document.querySelectorAll('.nav-links a').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+    // Function to update the active nav link dynamically based on scroll
+    function updateActiveNavLink() {
+      const sections = document.querySelectorAll("section");
+      let scrollPosition = window.scrollY + 100; // Offset for better detection
+      let activeId = null;
 
-        // Scroll to the section smoothly
-        target.scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
-
-    src = "https://cdn.jsdelivr.net/npm/lucide@latest" >
-      document.getElementById("toggleProjectsBtn").addEventListener("click", function () {
-        const projects = document.querySelector(".hidden-projects");
-
-        // Toggle visibility of hidden projects
-        projects.classList.toggle("show");
-
-        // Change text while keeping the icon intact
-        const btnText = this.querySelector(".btn-text");
-        if (projects.classList.contains("show")) {
-          btnText.textContent = "See Fewer Projects";
-        } else {
-          btnText.textContent = "See All Projects";
+      sections.forEach(section => {
+        if (scrollPosition >= section.offsetTop) {
+          activeId = section.getAttribute("id");
         }
-
-        // Rotate dropdown icon
-        this.classList.toggle("active");
       });
 
+      // Remove all active classes first
+      document.querySelectorAll(".nav-links a").forEach(link => {
+        link.classList.remove("active");
 
-
-    function setActiveTab() {
-      const sections = document.querySelectorAll('section');
-      let index = sections.length;
-      const offset = 100; // Adjust this value to change the scroll trigger
-
-      // Check if we're at the top of the page (Home section)
-      if (window.scrollY === 0) {
-        document.querySelectorAll('.nav-links a').forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === '#home') { // Assuming 'home' is the id of the Home section
-            link.classList.add('active');
-          }
-        });
-        return; // Skip the rest of the scroll logic if we're at the top
-      }
-
-      // Loop through sections to see which one is in the viewport with the offset
-      while (--index && window.scrollY + offset < sections[index].offsetTop) { }
-
-      const id = sections[index].id;
-      document.querySelectorAll('.nav-links a').forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${id}`) {
-          link.classList.add('active'); // Add active class to the link of the currently visible section
+        // Only add active class if it matches the currently visible section
+        if (link.getAttribute("href") === `#${activeId}`) {
+          link.classList.add("active");
         }
       });
     }
 
-    // Listen for the scroll event and update the active tab
-    window.addEventListener('scroll', setActiveTab);
+    // Listen for scroll events and update active nav link
+    window.addEventListener("scroll", updateActiveNavLink);
 
-    // Call the function on initial load to set the active tab correctly
-    setActiveTab();
+    // Run on page load to ensure correct active section
+    document.addEventListener("DOMContentLoaded", updateActiveNavLink);
+
+    // Toggle projects button functionality
+    document.getElementById("toggleProjectsBtn").addEventListener("click", function () {
+      const projects = document.querySelector(".hidden-projects");
+
+      projects.classList.toggle("show");
+
+      // Change text while keeping the icon intact
+      const btnText = this.querySelector(".btn-text");
+      btnText.textContent = projects.classList.contains("show") ? "See Fewer Projects" : "See All Projects";
+
+      // Rotate dropdown icon
+      this.classList.toggle("active");
+    });
+
+    // Side window toggle functionality
+    function toggleSideWindow() {
+      const sideWindow = document.getElementById("sideWindow");
+      const menuBtn = document.querySelector(".menu-btn");
+
+      sideWindow.classList.toggle("open");
+
+      // Hide menu button when side window is open
+      menuBtn.style.opacity = sideWindow.classList.contains("open") ? "0" : "1";
+    }
+
+    // Close side window when clicking outside
+    function closeSideWindow() {
+      const sideWindow = document.getElementById("sideWindow");
+      const menuBtn = document.querySelector(".menu-btn");
+
+      if (sideWindow.classList.contains("open")) {
+        sideWindow.classList.remove("open");
+        menuBtn.style.opacity = "1";
+      }
+    }
+
+    document.addEventListener("click", function (event) {
+      const sideWindow = document.getElementById("sideWindow");
+      const menuBtn = document.querySelector(".menu-btn");
+
+      if (!sideWindow.contains(event.target) && !menuBtn.contains(event.target)) {
+        closeSideWindow();
+      }
+    });
+
+    // Close side window on scroll
+    document.addEventListener("scroll", closeSideWindow);
+
   </script>
 </body>
 
